@@ -1,4 +1,4 @@
-#This is a simple program to simulate the Langton's Ant algorithm in C++ and Qt.
+###This is a simple program to simulate the Langton's Ant algorithm in C++ and Qt.
 
 ##Installation
 Want to try it on your machine? Just do:
