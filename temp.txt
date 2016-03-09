@@ -1,0 +1,38 @@
+cmake_minimum_required (VERSION 2.6)
+project (dsquare)
+
+include_directories("${PROJECT_BINARY_DIR}")
+# The version number.
+set (dsquare_VERSION_MAJOR 1)
+set (dsquare_VERSION_MINOR 0)
+ 
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file (
+  "${PROJECT_SOURCE_DIR}/dsquareConfig.h.in"
+  "${PROJECT_BINARY_DIR}/dsquareConfig.h"
+  )
+ 
+# add the binary tree to the search path for include files
+# so that we will find dsquareConfig.h
+include_directories(${Qt5Widgets_INCLUDE_DIRS})
+add_definitions(${Qt5Widgets_DEFINITIONS})
+
+# add the executable
+#add_executable(dsquare QTTest.cpp)
+
+# Find includes in corresponding build directories
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+# Instruct CMake to run moc automatically when needed.
+set(CMAKE_AUTOMOC ON)
+
+# Find the QtWidgets library
+find_package(Qt5Widgets)
+
+# Tell CMake to create the helloworld executable
+add_executable(helloworld WIN32 dsquare.cpp)
+
+# Use the Widgets module from Qt 5.
+target_link_libraries(helloworld Qt5::Widgets)
+
+
