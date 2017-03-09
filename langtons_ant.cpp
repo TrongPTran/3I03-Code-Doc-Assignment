@@ -16,6 +16,9 @@ And we are going to have each cell be either:
 ["W", "N"] if not, where N is a string that doesn't have A in it
 */
 
+
+// Import all required libraries and headers
+// This allows use of libraries, which the libraries can be called to help create the application and not recreate code that is already made
 #include "langtons_ant_config.h"
 #include <QApplication>
 #include <QtWidgets>
@@ -35,12 +38,15 @@ using namespace std;
 
 string direction;
 
+// Initializing window variables
 vector<vector<vector<string> > > grid;
 
 int height = 128;
 int width = 128;
 int depth = 2;
 
+// Conditions for when ant reaches a white or black square
+// If statement when ant reaches a colour, simple conditions for changing the color
 string invert_color(string color){
   if (color == "W"){
     return "B";
@@ -49,6 +55,10 @@ string invert_color(string color){
   }
 }
 
+// Function for ant turning right
+// Function provides a number of conditions when string "direction" reaches a condition
+// Function is written as is because ant needs conditions stated at top in order to turn
+// When ant reaches white square, the ant checks the direction it is facing, turns 90° right and returns a string its "new direction"
 char turn_right(string direction){
   if (direction == "U"){
     return 'R';
@@ -61,6 +71,10 @@ char turn_right(string direction){
   }
 }
 
+// Function for ant turning left
+// Function provides a number of conditions when string "direction" reaches a condition
+// Function is written as is because ant needs conditions stated at top in order to turn
+// When ant reaches black square, the ant checks the direction it is facing, turns 90° left and returns a string its "new direction"
 char turn_left(string direction){
   if (direction == "U"){
     return 'L';
@@ -73,6 +87,12 @@ char turn_left(string direction){
   }
 }
 
+
+// Function which allows the ant to move forward
+// The ant's position is tracked on a 2D board consisting of x and y coordinates which are created by a multidimensional array, the function needs to iterate through the array and check conditions for the ant to move
+// The function starts with iterations through the x dimension of the matrix and y dimension of matrix, then checks if "A" is not the greatest value
+// Afterso, the function will check conditionals and move accordingly to the ant's rules of movement, where the code will set a previous position of the matrix as the new position
+// After which it will return the new matrix with the update position
 vector<vector<vector<string>>> move_ant_forward(vector<vector<vector<string>>> matrix){
   for(int x=0;x<matrix.size();x++){
     for(int y=0;y<matrix[x].size();y++){
@@ -95,6 +115,12 @@ vector<vector<vector<string>>> move_ant_forward(vector<vector<vector<string>>> m
   }
 }
 
+// This function gets the current ant position and turns the ant
+// The function like the move_ant_forward function needs to iterate through the array and check the conditions in which the ant will turn
+// This function uses the matrix array to track the ants position, it will find the ants position , then checks if "A" is not the greatest value
+// Afterso, the function will check conditionals and turn accordingly to the ant's rules of turning, whether it will turn left or right
+// After that, the code will invert the color of the square and then call the move_ant_forward function to move the ant forward after its turn
+// In which the it will return the new matrix with an updated position
 vector<vector<vector<string>>> update_pixmap(vector<vector<vector<string>>> matrix){
 
   //Get current ant pos
@@ -116,6 +142,8 @@ vector<vector<vector<string>>> update_pixmap(vector<vector<vector<string>>> matr
   }
 }
 
+
+// The main function where all the interface setup happens in order to display Langton's Ant
 int main(int argc, char **argv){
 
   QApplication app (argc, argv);
@@ -139,13 +167,18 @@ int main(int argc, char **argv){
 
   grid[128/2][128/2][1] = "AL";//Initial placement of ant
 
-  QMainWindow *window = new QMainWindow;
+  // These objects are creating instances from the libraries, all of these are graphic related instances
+  // These include the windows, its labels, and the pixels they will use
+  // Libraries and these instances are used because the library is available for usage, coding these from scratch would be redundant and extremely inefficient
   QWidget *widget = new QWidget;
   QHBoxLayout *layout = new QHBoxLayout(widget);
   QLabel *label = new QLabel();
   QFont *font = new QFont("Courier");
   QPixmap *pix = new QPixmap(500,500);
 
+
+  // Create painter object and fill the whole map white
+  // A rule with Langton's ant is that the ant's starting map must be blank, henceforth these are created to make the map white (blank)
   pix->fill(Qt::white);
   QPainter *painter = new QPainter(pix);
 
@@ -156,6 +189,8 @@ int main(int argc, char **argv){
   layout->addWidget(label);
   window->show();
 
+  // Reiterations through the grid in order to color the grid when there is a possible change in the grid because of the ant movement
+  // Conditionals are set, these check if the grid is white or black, in which the brush will change to the opposite color to color the grid when the ant moves
   while (true){
     for(int x=0;x<grid.size();x++){
       for(int y=0;y<grid[x].size();y++){
