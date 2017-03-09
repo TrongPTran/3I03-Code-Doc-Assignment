@@ -166,10 +166,11 @@ int main(int argc, char **argv){
   }
 
   grid[128/2][128/2][1] = "AL";//Initial placement of ant
-
+  
   // These objects are creating instances from the libraries, all of these are graphic related instances
   // These include the windows, its labels, and the pixels they will use
   // Libraries and these instances are used because the library is available for usage, coding these from scratch would be redundant and extremely inefficient
+  QMainWindow *window = new QMainWindow;
   QWidget *widget = new QWidget;
   QHBoxLayout *layout = new QHBoxLayout(widget);
   QLabel *label = new QLabel();
