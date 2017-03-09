@@ -1,3 +1,5 @@
+## This is a new README, these files are only being used for an example of code documentation, these are not edited besides the comments
+
 ###This is a simple program to simulate the Langton's Ant algorithm in C++ and Qt.
 
 ##Installation
